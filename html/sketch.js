@@ -9,11 +9,56 @@ function preload() {
       "This is yet some more sample text in order to make sure that information can be changed on the fly if it is needed. e.g. The answer to life, the universe, and everything is inexorably 42.",
     none: "",
   };
-} //In-built function: Gets / defines model's metadata (runs before start of main program).
+  
+  node_default_opacity = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26];
+  node_default_translucency = [];
+  node_default_transparency = [];
+  
+  link_default_opacity = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,25,26,27,28,29,30,31,32,33,34,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56];
+  link_default_translucency = [0,1,2,3,4,5,6,7,8,9,24,35,36,37,38,39,40,41];
+  link_default_transparency = [];
+  
+  walkthrough_info = {
+    test:
+      ["This is the innate immune system. It is immunity that one is born with. This type of immunity is written in one’s genes, offering lifelong protection. The innate immune response is fast acting and non-specific, meaning it does not respond differently based on the specific virus or bacteria that it detects. The innate immune system encompasses physical barriers and chemical and cellular defenses.","Adaptive immunity is an organism’s acquired immunity to a specific pathogen. As such, it’s also referred to as acquired immunity. Adaptive immunity is not immediate, nor does it always last throughout an organism’s entire lifespan, although it can. The adaptive immune response is marked by clonal expansion of T and B lymphocytes, releasing many antibody copies to neutralize or destroy their target antigen.","Pathogens in the oldest and broadest sense, are any organism or agent that can produce disease. A pathogen may also be referred to as an infectious agent, or simply a germ."],
+  };
+  
+  node_opacity = {
+    test:
+      [[4,5,6,7,9,10,11,12,13],[15,16,17,18,19,20,21,22,23,24,25,26],[0,1,2,3,8,14]],
+  };
+  
+  node_translucency = {
+    test:
+      [[0,1,2,3,8,14,15,16,17,18,19,20,21,22,23,24,25,26],[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],[4,5,6,7,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26]],
+  };
+  
+  node_transparency = {
+    test:
+      [[],[],[]],
+  };
+  
+  link_opacity = {
+    test:
+      [[10,11,12,13,14,15,16,17,18,19,44],[24,25,26,27,28,29,30,31,32,33,34,35,36,37,47,48,49,50,51,52],[]],
+  };
+  
+  link_translucency = {
+    test:
+      [[0,1,2,3,4,5,6,7,8,9,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,45,46,47,48,49,50,51,52,53,54,55,56],[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,38,39,40,41,42,43,44,45,46,53,54,55,56],[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56]],
+  };
+  
+  link_transparency = {
+    test:
+      [[],[],[]],
+  };
+  
+} //In-built function: Gets / defines model's metadata (runs before start of main program). (n.b. delete test values as info is not mine and only placeholders for debugging)
 
 class colors {
   constructor() {
     this.blank = "#00000000"; //transparant
+    this.background = "#DCDCDC" //background
     this.black0 = "#000000"; //relay
     this.grey0 = "#808080"; //group
     this.red0 = "#EA0000"; //attack
@@ -26,6 +71,10 @@ class colors {
     this.red1 = "#CC0000"; //replicate
     this.brown1 = "#833C0C"; //accumulate resources
     this.gold1 = "#996600"; //evade destruction
+    this.black3 = "#000000"; //menu text
+    this.white3 = "#FFFFFF"; //menu background
+    this.gray3 = "#999999" //menu boarder
+    this.silver3 = "#C5C5C5" //menu disabled text
   }
 } //Defines all the commonly used colours in the program. Changes here are global.
 
@@ -41,6 +90,7 @@ class node {
     core_color = "#06570A",
     render_core = true,
     group_ids = [],
+    alpha_pct = 100,
     id = -1
   ) {
     this.text_box = text_box;
@@ -53,6 +103,7 @@ class node {
     this.group_ids = group_ids;
     this.radius = round(this.diameter / 2, 0);
     this.render_core = render_core;
+    this.alpha_pct = alpha_pct;
     if (id == -1) {
       this.id = next_node_id;
       next_node_id += 1;
@@ -66,7 +117,17 @@ class node {
     this.info = info_to_get[info];
   }
 
+  int_to_hex(number = 0) {
+    if (number.toString(16).length > 1){
+      return number.toString(16);
+    } else {
+      return "0"+number.toString(16);
+    }
+  }
+  
   render() {
+    this.color_val=this.int_to_hex(round(((100-this.alpha_pct) / 100)*255, 0));
+    this.text_val=this.int_to_hex(round(((this.alpha_pct) / 100)*255, 0));
     fill(this.fill_color);
     stroke(this.line_color);
     strokeWeight(round(this.diameter / 8, 0));
@@ -76,8 +137,13 @@ class node {
       fill(this.core_color);
       circle(this.x, this.y, this.radius);
     }
-    fill("#000000");
-    stroke("#ffffff");
+    if (this.alpha_pct < 100) {
+      fill(c.black3+this.text_val);
+      stroke(c.white3+this.text_val);
+    } else {
+      fill(c.black3);
+      stroke(c.white3);
+    }
     strokeWeight(round(0.9 * this.diameter ** 0.25, 0));
     this.string = join([this.text_box, str(this.id)], "#");
     this.width = textWidth(this.string);
@@ -89,8 +155,14 @@ class node {
       this.width * 2,
       this.diameter
     );
+    if (this.alpha_pct < 100){
+      fill(c.background+this.color_val);
+      stroke(c.background+this.color_val);
+      strokeWeight((this.diameter / 8)+1);
+      circle(this.x,this.y,this.diameter);
+    }
   }
-} //Handels properties and rendering of nodes in model. (n.b. need to add transparency param)
+} //Handels properties and rendering of nodes in model.
 
 class link {
   constructor(
@@ -161,6 +233,7 @@ class link {
       this.y_mid = round((this.y1 + this.y2) / 2, 0);
 
       if (this.double_arrows) {
+        fill(c.black3 + this.int_to_hex(round((this.alpha_pct / 100) * 255, 0)));
         circle(this.x_mid, this.y_mid, this.weight * 2);
         this.x_mid = 0.4 * this.x1 + 0.6 * this.x2;
         this.y_mid = 0.4 * this.y1 + 0.6 * this.y2;
@@ -251,7 +324,7 @@ class link {
   }
 
   render() {
-    stroke(220, 220, 220, (this.alpha_pct / 100) * 255);
+    stroke(c.background + this.int_to_hex(round((this.alpha_pct / 100) * 255, 0)));
     strokeWeight(this.weight * 3);
     this.render_sub_route();
     if (this.double_arrows) {
@@ -259,7 +332,7 @@ class link {
       this.render_sub_route();
       this.swap_id();
     }
-    stroke("#000000" + this.int_to_hex(round((this.alpha_pct / 100) * 255, 0)));
+    stroke(c.black3 + this.int_to_hex(round((this.alpha_pct / 100) * 255, 0)));
     strokeWeight(this.weight * 1.5);
     this.render_sub_route();
     if (this.double_arrows) {
@@ -280,25 +353,197 @@ class link {
 
     //circle(this.x_mid, this.y_mid, 6 * this.weight); // shows arrow hitboxes
   }
-} //Handels all proporties and rendering of links in model. (n.b. need to fix offset calculations)
+} //Handels all proporties and rendering of links in model. (n.b. need to fix offset calculations and improve transparency)
+
+class menu {} //to be made...
 
 class walkthrough {
   constructor(
-    opacity_steps = [],
-    translucency_steps = [],
-    transparency_steps = [],
-    info_steps = []
+    node_opacity_steps = [[]],
+    node_translucency_steps = [[]],
+    node_transparency_steps = [[]],
+    link_opacity_steps = [[]],
+    link_translucency_steps = [[]],
+    link_transparency_steps = [[]],
+    info_steps = ["This is some sample text in order to demonstrate the text wrapping capabilities of the info part of the walkthrough module. For example: the quick brown fox jumps over the lazy dog in order to avoid the end of the text box."]
   ) {
-      this.opacity_steps = opacity_steps;
-      this.translucency_steps = translucency_steps;
-      this.transparency_steps = transparency_steps;
+      this.node_opacity_steps = node_opacity_steps;
+      this.node_translucency_steps = node_translucency_steps;
+      this.node_transparency_steps = node_transparency_steps;
+      this.link_opacity_steps = link_opacity_steps;
+      this.link_translucency_steps = link_translucency_steps;
+      this.link_transparency_steps = link_transparency_steps;
       this.info_steps = info_steps;
-      mode = "walkthrough";
-      
+      this.step=0;
+      this.visible=true;
+      this.update_model();
+      display_walkthrough=true;
     }
+  
+  
+  default_model () {
+    for (let l = 0; l < node_default_opacity.length; l++) {
+      nodes[node_default_opacity[l]].alpha_pct = 100;
+    }
+    for (let l = 0; l < node_default_translucency.length; l++) {
+      nodes[node_default_translucency[l]].alpha_pct = 15;
+    }
+    for (let l = 0; l < node_default_transparency.length; l++) {
+      nodes[node_default_transparency[l]].alpha_pct = 0;
+    }
+    for (let l = 0; l < link_default_opacity.length; l++) {
+      links[link_default_opacity[l]].alpha_pct = 100;
+    }
+    for (let l = 0; l < link_default_translucency.length; l++) {
+      links[link_default_translucency[l]].alpha_pct = 15;
+    }
+    for (let l = 0; l < link_default_transparency.length; l++) {
+      links[link_default_transparency[l]].alpha_pct = 0;
+    }
+  }
+  
+  step_forward () {
+    if (this.step < this.info_steps.length - 1){
+      this.step = this.step + 1;
+      this.update_model();
+    }
+  }
+  
+  step_backward () {
+    if (this.step > 0){
+      this.step = this.step - 1;
+      this.update_model();
+    }
+  }
+  
+  toggle_visibility () {
+    if (this.visible) {
+      this.visible = false;
+    } else {
+      this.visible = true;
+    }
+  }
+  
+  update_model () {
+    for (let l = 0; l < this.node_opacity_steps[this.step].length; l++) {
+      nodes[this.node_opacity_steps[this.step][l]].alpha_pct = 100;
+    }
+    for (let l = 0; l < this.node_translucency_steps[this.step].length; l++) {
+      nodes[this.node_translucency_steps[this.step][l]].alpha_pct = 15;
+    }
+    for (let l = 0; l < this.node_transparency_steps[this.step].length; l++) {
+      nodes[this.node_transparency_steps[this.step][l]].alpha_pct = 0;
+    }
+    for (let l = 0; l < this.link_opacity_steps[this.step].length; l++) {
+      links[this.link_opacity_steps[this.step][l]].alpha_pct = 100;
+    }
+    for (let l = 0; l < this.link_translucency_steps[this.step].length; l++) {
+      links[this.link_translucency_steps[this.step][l]].alpha_pct = 15;
+    }
+    for (let l = 0; l < this.link_transparency_steps[this.step].length; l++) {
+      links[this.link_transparency_steps[this.step][l]].alpha_pct = 0;
+    }
+    return nodes,links
+  }
+  
+  render () {
+    if (this.visible) {
+      fill(c.white3);
+      stroke(c.gray3);
+      strokeWeight(3);
+      rect(0,windowHeight-128,400,128);
+      fill(c.silver3);
+      stroke(c.gray3);
+      rect(0,windowHeight-128,400,16);
+      noStroke();
+      textSize(12);
+      fill(c.black3);
+      this.title_text = "    Back  --------------------------------- Step " + str(this.step + 1) + ": ---------------------------------";
+      text(this.title_text,2,windowHeight-116);
+      fill(c.black3);
+      noStroke();
+      triangle(397,windowHeight-120,385,windowHeight-126,385,windowHeight-114);
+      triangle(369,windowHeight-120,381,windowHeight-126,381,windowHeight-114);
+      triangle(2,windowHeight-120,14,windowHeight-126,14,windowHeight-114);
+      stroke(c.gray3);
+      strokeWeight(3);
+      line(44,windowHeight-128,44,windowHeight-112);
+      line(366,windowHeight-128,366,windowHeight-112);
+      noStroke();
+      textSize(10);
+      fill(c.black3);
+      text(this.info_steps[this.step],2,windowHeight-110,398);
+    }
+  }
+  
 } //to be made...
 
-class key {} //to be made...
+class model_key {
+  constructor(visible=true,indexes=["Immune System","Attack","Activate","Communicate","Produce","Morph","Inflame","Pathogens & Parasites","Replicate","Accumilate Resources","Evade Destruction"],colors=[c.black3,c.red0,c.green0,c.blue0,c.gold0,c.purple0,c.orange0,c.black3,c.red1,c.brown1,c.gold1],headings=[true,false,false,false,false,false,false,true,false,false,false,false]) {
+    this.visible=visible;
+    this.indexes=indexes;
+    this.colors=colors;
+    this.headings=headings;
+  }
+  
+  render() {
+    if (this.visible) {
+      fill(c.white3);
+      stroke(c.gray3);
+      strokeWeight(2);
+      rect(0,0,128,191);
+      fill(c.silver3);
+      stroke(c.gray3);
+      rect(0,0,128,16);
+      noStroke();
+      textSize(12);
+      fill(c.black3);
+      text("---------- Key: ----------",2,12);
+      this.y_counter=28;
+      for (let l = 0; l < this.indexes.length; l++) {
+        if (this.headings[l]) {
+          fill(c.white3);
+          stroke(c.gray3);
+          strokeWeight(1);
+          line(0,this.y_counter-12,128,this.y_counter-12);
+          line(0,this.y_counter+4,128,this.y_counter+4);
+          fill(this.colors[l]);
+          noStroke();
+          text(this.indexes[l]+":",2,this.y_counter);
+        } else {
+          fill(this.colors[l]);
+          noStroke();
+          text(this.indexes[l],2,this.y_counter);
+        }
+        fill(c.black3);
+        noStroke();
+        triangle(115,4,125,4,120,12);
+        this.y_counter=this.y_counter+16
+      }
+      
+    } else {
+      fill(c.silver3);
+      stroke(c.gray3);
+      rect(0,0,128,16);
+      noStroke();
+      textSize(12);
+      fill(c.black3);
+      text("---------- Key: ----------",2,12);
+      fill(c.black3);
+      noStroke();
+      triangle(115,12,125,12,120,4);
+    }
+  }
+  
+  toggle_visibility() {
+    if (this.visible) {
+      this.visible = false;
+    } else {
+      this.visible = true;
+    }
+  }
+  
+} //Handels rendering and visibility of model key.
 
 class selector {
   constructor(x = 0, y = 0, multi = false) {
@@ -345,12 +590,31 @@ class selector {
       this.selected = null;
       this.type = null;
     }
+    
+    //Checks bellow will not scale correctly. Fix if gui magnitude scaling is implemented in future.
+    
+    if (114 < this.x && this.x < 126 && 3 < this.y && this.y < 13) {
+      k.toggle_visibility();
+    }
+    
+    if (1 < this.x && this.x < 41 && windowHeight - 128 < this.y && this.y < windowHeight - 112) {
+      w.default_model();
+    }
+    
+    if (369 < this.x && this.x < 381 && windowHeight - 128 < this.y && this.y < windowHeight - 112) {
+      w.step_backward();
+    }
+    
+    if (385 < this.x && this.x < 397 && windowHeight - 128 < this.y && this.y < windowHeight - 112) {
+      w.step_forward();
+    }
+    
   }
 
   render() {
     if (options) {
-      fill("#FFFFFF");
-      stroke("#999999");
+      fill(c.white3);
+      stroke(c.gray3);
       strokeWeight(2);
       rect(this.x, this.y, 40, 49);
       strokeWeight(1);
@@ -359,14 +623,14 @@ class selector {
       line(this.x, this.y + 37, this.x + 40, this.y + 37);
       noStroke();
       if (this.type == "link") {
-        fill("#C5C5C5");
+        fill(c.silver3);
       } else {
-        fill("#000000");
+        fill(c.black3);
       }
       textSize(12);
       text("Move", this.x + 2, this.y + 11);
       text("Focus", this.x + 2, this.y + 23);
-      fill("#000000");
+      fill(c.black3);
       noStroke();
       text("Info", this.x + 2, this.y + 35);
       text("Close", this.x + 2, this.y + 47);
@@ -422,13 +686,13 @@ class selector {
   }
 
   render_info() {
-    fill("#FFFFFF");
-    stroke("#999999");
+    fill(c.white3);
+    stroke(c.gray3);
     strokeWeight(2);
     rect(width - 128, 0, 128, height);
     strokeWeight(1);
     line(width - 128, 13, width, 13);
-    fill("#000000");
+    fill(c.black3);
     noStroke();
     textSize(12);
     text("Close", width - 33, 11);
@@ -442,39 +706,46 @@ class selector {
   }
 } //Handels selection of model components, menue rendering, and node movement.
 
-function reset_model(){
+function reset_model() {
+  frameRate(0);
+  
+  next_node_id = 0;
+  max_node_id = 0;
+  next_link_id = 0;
+  max_link_id = 0;
   nodes = {};
   links = [];
-  new_nodes=[new node(text_box="Pathogens",diameter=5.25*sm+cm,x=1.25*sx,y=4*sy,info="test",fill_color=c.grey0,line_color=c.grey0,core_color=c.blank,render_core=false,group_ids=[1,2,3]), //this is here due to a rendering bug that occours with the text of the first node created
-            new node(text_box="Bacteria",diameter=2*sm+cm,x=0.9*sx+cx,y=4.35*sy+cy,info="test",fill_color=c.brown1,line_color=c.gold1,core_color=c.red1,render_core=true,group_ids=[0,2,3]),
-            new node(text_box="Virus",diameter=1*sm+cm,x=1.9*sx+cx,y=4.25*sy+cy,info="test",fill_color=c.red1,line_color=c.gold1,core_color=c.blank,render_core=false,group_ids=[0,1,3]),
-            new node(text_box="Fungi",diameter=1.5*sm+cm,x=1.25*sx+cx,y=3.35*sy+cy,info="test",fill_color=c.brown1,line_color=c.gold1,core_color=c.red1,render_core=true,group_ids=[0,1,2]),
-            new node(text_box="Neutrophil",diameter=2.5*sm+cm,x=7.5*sx+cx,y=4.25*sy+cy,info="test",fill_color=c.blue0,line_color=c.orange0,core_color=c.red0),
+  
+  new_nodes=[new node(text_box="Pathogens",diameter=5.25*sm+cm,x=2.8*sx,y=3.8*sy,info="test",fill_color=c.grey0,line_color=c.grey0,core_color=c.blank,render_core=false,group_ids=[1,2,3]), //this is here due to a rendering bug that occours with the text of the first node created
+            new node(text_box="Bacteria",diameter=2*sm+cm,x=2.55*sx+cx,y=4.1*sy+cy,info="test",fill_color=c.brown1,line_color=c.gold1,core_color=c.red1,render_core=true,group_ids=[0,2,3]),
+            new node(text_box="Virus",diameter=1*sm+cm,x=3.15*sx+cx,y=4*sy+cy,info="test",fill_color=c.red1,line_color=c.gold1,core_color=c.blank,render_core=false,group_ids=[0,1,3]),
+            new node(text_box="Fungi",diameter=1.5*sm+cm,x=2.8*sx+cx,y=3.2*sy+cy,info="test",fill_color=c.brown1,line_color=c.gold1,core_color=c.red1,render_core=true,group_ids=[0,1,2]),
+            new node(text_box="Neutrophil",diameter=2.5*sm+cm,x=7.5*sx+cx,y=4*sy+cy,info="test",fill_color=c.blue0,line_color=c.orange0,core_color=c.red0),
             new node(text_box="Macrophage",diameter=4*sm+cm,x=4*sx+cx,y=5.25*sy+cy,info="test",fill_color=c.red0,line_color=c.green0,core_color=c.blue0),
             new node(text_box="Compliment",diameter=1*sm+cm,x=4.01*sx+cx,y=7.5*sy+cy,info="test",fill_color=c.red0,line_color=c.green0,core_color=c.blank,render_core=false),
             new node(text_box="Dendritic Cell",diameter=2.75*sm+cm,x=7.5*sx+cx,y=7*sy+cy,info="test",fill_color=c.blue0,line_color=c.green0,core_color=c.blank,render_core=false),
             new node(text_box="Infected/Cancerous Cell",diameter=2.25*sm+cm,x=10.25*sx+cx,y=9.75*sy+cy,info="test",fill_color=c.gold0,line_color=c.gold1,core_color=c.pink0),
             new node(text_box="Natural Killer Cell",diameter=2.25*sm+cm,x=7.25*sx+cx,y=9.75*sy+cy,info="test",fill_color=c.blue0,line_color=c.red0,core_color=c.blank,render_core=false),
-            new node(text_box="Monocyte",diameter=3*sm+cm,x=1*sx+cx,y=7.5*sy+cy,info="test",fill_color=c.purple0,line_color=c.red0,core_color=c.blank,render_core=false),
+            new node(text_box="Monocyte",diameter=3*sm+cm,x=0.75*sx+cx,y=5.25*sy+cy,info="test",fill_color=c.purple0,line_color=c.red0,core_color=c.blank,render_core=false),
             new node(text_box="Eosinophil",diameter=2*sm+cm,x=7.5*sx+cx,y=1*sy+cy,info="test",fill_color=c.red0,line_color=c.green0,core_color=c.orange0),
             new node(text_box="Basophil",diameter=1.5*sm+cm,x=8.75*sx+cx,y=2.5*sy+cy,info="test",fill_color=c.green0,line_color=c.red0,core_color=c.orange0),
             new node(text_box="Mast Cell",diameter=2.25*sm+cm,x=9.25*sx+cx,y=3.75*sy+cy,info="test",fill_color=c.blue0,line_color=c.green0,core_color=c.orange0),
-            new node(text_box="Parasites",diameter=6*sm+cm,x=1.25*sx+cx,y=1.25*sy+cy,info="test",fill_color=c.brown1,line_color=c.gold1,core_color=c.red1),
+            new node(text_box="Parasites",diameter=6*sm+cm,x=2.75*sx+cx,y=1.25*sy+cy,info="test",fill_color=c.brown1,line_color=c.gold1,core_color=c.red1),
             new node(text_box="Antibodies",diameter=1*sm+cm,x=11*sx+cx,y=1*sy+cy,info="test",fill_color=c.red0,line_color=c.green0,core_color=c.blank,render_core=false),
-            new node(text_box="Plasma Cell",diameter=2.75*sm+cm,x=15*sx+cx,y=3.5*sy+cy,info="test",fill_color=c.green0,line_color=c.purple0,core_color=c.gold0),
+            new node(text_box="Plasma Cell",diameter=2.75*sm+cm,x=14.5*sx+cx,y=3.5*sy+cy,info="test",fill_color=c.green0,line_color=c.purple0,core_color=c.gold0),
             new node(text_box="B Cell",diameter=1.5*sm+cm,x=13.25*sx+cx,y=3.5*sy+cy,info="test",fill_color=c.purple0,line_color=c.green0,core_color=c.gold0),
             new node(text_box="Memory B Cell",diameter=1.5*sm+cm,x=11*sx+cx,y=2.25*sy+cy,info="test",fill_color=c.gold0,line_color=c.gold0,core_color=c.blank,render_core=false),
             new node(text_box="Virgin B Cell",diameter=1.25*sm+cm,x=11*sx+cx,y=3.5*sy+cy,info="test",fill_color=c.purple0,line_color=c.purple0,core_color=c.blank,render_core=false),
-            new node(text_box="Long Lived Plasma Cell",diameter=3*sm+cm,x=15*sx+cx,y=1*sy+cy,info="test",fill_color=c.gold0,line_color=c.gold0,core_color=c.blank,render_core=false),
+            new node(text_box="Long Lived Plasma Cell",diameter=3*sm+cm,x=14.5*sx+cx,y=1*sy+cy,info="test",fill_color=c.gold0,line_color=c.gold0,core_color=c.blank,render_core=false),
             new node(text_box="Killer T Cell",diameter=2*sm+cm,x=12*sx+cx,y=8.5*sy+cy,info="test",fill_color=c.red0,line_color=c.purple0,core_color=c.blank,render_core=false),
-            new node(text_box="Memory Killer T Cell",diameter=2*sm+cm,x=15*sx+cx,y=9.75*sy+cy,info="test",fill_color=c.red0,line_color=c.red0,core_color=c.blank,render_core=false),
+            new node(text_box="Memory Killer T Cell",diameter=2*sm+cm,x=14.5*sx+cx,y=9.75*sy+cy,info="test",fill_color=c.red0,line_color=c.red0,core_color=c.blank,render_core=false),
             new node(text_box="Helper T Cell",diameter=1.5*sm+cm,x=11.5*sx+cx,y=5.25*sy+cy,info="test",fill_color=c.green0,line_color=c.purple0,core_color=c.blue0,render_core=true),
-            new node(text_box="Memory Helper T Cell",diameter=1.5*sm+cm,x=15*sx+cx,y=5.75*sy+cy,info="test",fill_color=c.blue0,line_color=c.green0,core_color=c.blank,render_core=false),
+            new node(text_box="Memory Helper T Cell",diameter=1.5*sm+cm,x=14.5*sx+cx,y=5.75*sy+cy,info="test",fill_color=c.blue0,line_color=c.green0,core_color=c.blank,render_core=false),
             new node(text_box="Virgin Helper T Cell",diameter=1.5*sm+cm,x=10.75*sx+cx,y=7*sy+cy,info="test",fill_color=c.purple0,line_color=c.purple0,core_color=c.blank,render_core=false),
             new node(text_box="Virgin Killer T Cell",diameter=1.75*sm+cm,x=9.75*sx+cx,y=8.5*sy+cy,info="test",fill_color=c.purple0,line_color=c.purple0,core_color=c.blank,render_core=false),
             ];
   
-  links=[new link(from_id=4,to_id=0,info="test",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
+  links=[new link(from_id=4,to_id=0,info="test",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15), //0
         new link(from_id=5,to_id=0,info="test",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
         new link(from_id=6,to_id=0,info="test",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
         new link(from_id=9,to_id=8,info="test",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
@@ -484,7 +755,7 @@ function reset_model(){
         new link(from_id=12,to_id=14,info="test",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
         new link(from_id=21,to_id=8,info="test",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
         new link(from_id=22,to_id=8,info="test",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
-        new link(from_id=10,to_id=5,info="test",line_color=c.purple0),
+        new link(from_id=10,to_id=5,info="test",line_color=c.purple0), //10
         new link(from_id=5,to_id=6,info="test",line_color=c.blue0,double_arrows=false,offset=4.9),
         new link(from_id=6,to_id=13,info="test",line_color=c.green0),
         new link(from_id=6,to_id=5,info="test",line_color=c.green0,double_arrows=false,offset=6.5),
@@ -494,7 +765,7 @@ function reset_model(){
         new link(from_id=11,to_id=4,info="test",line_color=c.green0),
         new link(from_id=12,to_id=4,info="test",line_color=c.green0),
         new link(from_id=12,to_id=13,info="test",line_color=c.green0),
-        new link(from_id=15,to_id=13,info="test",line_color=c.green0),
+        new link(from_id=15,to_id=13,info="test",line_color=c.green0), //20
         new link(from_id=15,to_id=12,info="test",line_color=c.green0),
         new link(from_id=15,to_id=11,info="test",line_color=c.green0),
         new link(from_id=6,to_id=17,info="test",line_color=c.green0),
@@ -504,7 +775,7 @@ function reset_model(){
         new link(from_id=17,to_id=15,info="test",line_color=c.gold0),
         new link(from_id=18,to_id=15,info="test",line_color=c.gold0),
         new link(from_id=17,to_id=18,info="test",line_color=c.purple0),
-        new link(from_id=17,to_id=16,info="test",line_color=c.purple0),
+        new link(from_id=17,to_id=16,info="test",line_color=c.purple0), //30
         new link(from_id=19,to_id=17,info="test",line_color=c.purple0),
         new link(from_id=20,to_id=15,info="test",line_color=c.gold0),
         new link(from_id=16,to_id=20,info="test",line_color=c.purple0),
@@ -514,7 +785,7 @@ function reset_model(){
         new link(from_id=24,to_id=22,info="test",line_color=c.green0,double_arrows=false,offset=0,alpha_pct=15),
         new link(from_id=24,to_id=9,info="test",line_color=c.blue0,double_arrows=false,offset=0,alpha_pct=15),
         new link(from_id=24,to_id=7,info="test",line_color=c.blue0,double_arrows=false,offset=0,alpha_pct=15),
-        new link(from_id=24,to_id=5,info="test",line_color=c.blue0,double_arrows=false,offset=0,alpha_pct=15),
+        new link(from_id=24,to_id=5,info="test",line_color=c.blue0,double_arrows=false,offset=0,alpha_pct=15), //40
         new link(from_id=24,to_id=4,info="test",line_color=c.blue0,double_arrows=false,offset=0,alpha_pct=15),
         new link(from_id=23,to_id=9,info="test",line_color=c.blue0),
         new link(from_id=23,to_id=7,info="test",line_color=c.blue0,double_arrows=false,offset=8),
@@ -524,7 +795,7 @@ function reset_model(){
         new link(from_id=23,to_id=16,info="test",line_color=c.blue0,double_arrows=true),
         new link(from_id=23,to_id=21,info="test",line_color=c.green0),
         new link(from_id=23,to_id=22,info="test",line_color=c.green0),
-        new link(from_id=23,to_id=24,info="test",line_color=c.purple0),
+        new link(from_id=23,to_id=24,info="test",line_color=c.purple0), //50
         new link(from_id=25,to_id=23,info="test",line_color=c.purple0),
         new link(from_id=26,to_id=21,info="test",line_color=c.purple0),
         new link(from_id=7,to_id=25,info="test",line_color=c.blue0,double_arrows=false,offset=8),
@@ -536,18 +807,24 @@ function reset_model(){
   for (let n = 0; n < new_nodes.length; n++) {
     nodes[new_nodes[n].id] = new_nodes[n];
   }
+  frameRate(90);
   return nodes,links
 } //Defines the default baked parameters of the model.
 
 function reset_variables() {
   options = false;
+  display_walkthrough = false;
   display_info = false;
   mode = "default";
   next_node_id = 0;
   max_node_id = 0;
   next_link_id = 0;
   max_link_id = 0;
-  sx = 50;
+  nodes = {};
+  links = [];
+  node_previous_alpha_pct = {};
+  link_previous_alpha_pct = [];
+  sx = 75;
   sy = 50;
   sm = 16;
   cx = 0 * sx;
@@ -558,15 +835,19 @@ function reset_variables() {
 function setup() {
   reset_variables();
   c = new colors();
+  k = new model_key();
   angleMode(DEGREES);
   createCanvas(windowWidth, windowHeight);
   reset_model();
   s = new selector((x = -1), (y = -1));
+  w = new walkthrough(node_opacity["test"],node_translucency["test"],node_transparency["test"],link_opacity["test"],link_translucency["test"],link_transparency["test"],walkthrough_info["test"]); // TEMPORARY! Remove once dedicated system for viewing walkthroughs is in place.
   frameRate(90);
 } //In-built function: Sets and defines variables for main loop (runs before draw function).
 
 function draw() {
-  background(220);
+  resizeCanvas(windowWidth, windowHeight);
+  
+  background(c.background);
 
   if (mode == "move") {
     s.move();
@@ -578,7 +859,13 @@ function draw() {
   for (let n = 0; n <= max_node_id; n++) {
     nodes[n].render();
   }
-
+  
+  k.render();
+  
+  if (display_walkthrough) {
+    w.render();
+  }
+  
   s.render();
 
   if (mode == "info") {
