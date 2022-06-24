@@ -2,6 +2,11 @@
 // Made using p5.js (https://p5js.org)
 
 function preload() {
+  
+  nodes_x_scale = [2.8,2.55,3.15,2.8,7.5,4,4.01,7.5,10.25,7.25,0.75,7.5,8.75,9.25,2.75,11,14.5,13.25,1.5,1.25,14.5,12,14.5,11.5,14.5,10.75,9.75];
+  nodes_y_scale = [3.8,4.1,4,3.2,4,5.25,7.5,7,9.75,9.75,5.25,1,2.5,3.75,1.25,1,3.5,3.5,2.25,3.5,1,8.5,9.75,5.25,5.75,7,8.5];
+  nodes_m_scale = [5.25,2,1,1.5,2.5,4,1,2.75,2.25,2.25,3,2,1.5,2.25,6,1,2.75,1.5,1.5,1.25,3,2,2,1.5,1.5,1.5,1.75];
+  
   info_to_get = {
     test:
       "This is some sample text to make sure everything is working correctly. E.g. The quick brown fox jumps over the lazy dog.",
@@ -53,7 +58,7 @@ function preload() {
       [[],[],[]],
   };
   
-} //In-built function: Gets / defines model's metadata (runs before start of main program). (n.b. delete test values as info is not mine and only placeholders for debugging)
+} //In-built function: Gets / defines model"s metadata (runs before start of main program). (n.b. delete test values as info is not mine and only placeholders for debugging)
 
 class colors {
   constructor() {
@@ -75,6 +80,7 @@ class colors {
     this.white3 = "#FFFFFF"; //menu background
     this.gray3 = "#999999" //menu boarder
     this.silver3 = "#C5C5C5" //menu disabled text
+    this.blue3 = "#0047C0" //menu link
   }
 } //Defines all the commonly used colours in the program. Changes here are global.
 
@@ -100,6 +106,8 @@ class node {
     this.diameter = diameter;
     this.x = x;
     this.y = y;
+    this.scale_x = this.x;
+    this.scale_y = this.y;
     this.group_ids = group_ids;
     this.radius = round(this.diameter / 2, 0);
     this.render_core = render_core;
@@ -219,8 +227,8 @@ class link {
     if (this.offset != 0) {
       this.gradient = -1 / ((this.y1 - this.y2) / (this.x1 - this.x2));
 
-      this.x_offset = this.offset * this.x_multi * this.swap_multi;
-      this.y_offset = this.offset * this.y_multi * this.swap_multi;
+      this.x_offset = (this.offset * this.x_multi * this.swap_multi) ^ 0.5;
+      this.y_offset = (this.offset * this.y_multi * this.swap_multi) ^ 0.5;
       this.x1 = this.x1 + this.x_offset;
       this.x2 = this.x2 + this.x_offset;
       this.y1 = this.y1 + this.y_offset;
@@ -355,7 +363,39 @@ class link {
   }
 } //Handels all proporties and rendering of links in model. (n.b. need to fix offset calculations and improve transparency)
 
-class menu {} //to be made...
+class menu {
+  constructor() {
+    this.visible = true;
+    this.page = 0;
+  }
+  
+  render() {
+    if (this.visible) {
+      fill(c.white3);
+      stroke(c.gray3);
+      strokeWeight(3);
+      rect(0,windowHeight-128,400,128);
+      fill(c.silver3);
+      stroke(c.gray3);
+      rect(0,windowHeight-128,400,16);
+      stroke(c.gray3);
+      strokeWeight(1.5);
+      fill(c.white3);
+      rect(3,windowHeight-72,50,10)
+      noStroke();
+      textSize(12);
+      fill(c.black3);
+      text("-------------------------------------------- Menu: --------------------------------------------",2,windowHeight-116);
+      textSize(10);
+      text("Click on a cell / arrow for info and more options for . Or alternatively, select one of the walkthroughs bellow to learn more on how your immune system protects your body from pathogens:",2,windowHeight-110,398);
+      textSize(9);
+      fill(c.blue3);
+      text("Introduction",4,windowHeight-64);
+      
+    }
+  }
+  
+} //to be made...
 
 class walkthrough {
   constructor(
@@ -381,7 +421,7 @@ class walkthrough {
     }
   
   
-  default_model () {
+  default_model() {
     for (let l = 0; l < node_default_opacity.length; l++) {
       nodes[node_default_opacity[l]].alpha_pct = 100;
     }
@@ -402,21 +442,21 @@ class walkthrough {
     }
   }
   
-  step_forward () {
+  step_forward() {
     if (this.step < this.info_steps.length - 1){
       this.step = this.step + 1;
       this.update_model();
     }
   }
   
-  step_backward () {
+  step_backward() {
     if (this.step > 0){
       this.step = this.step - 1;
       this.update_model();
     }
   }
   
-  toggle_visibility () {
+  toggle_visibility() {
     if (this.visible) {
       this.visible = false;
     } else {
@@ -424,7 +464,7 @@ class walkthrough {
     }
   }
   
-  update_model () {
+  update_model() {
     for (let l = 0; l < this.node_opacity_steps[this.step].length; l++) {
       nodes[this.node_opacity_steps[this.step][l]].alpha_pct = 100;
     }
@@ -446,7 +486,7 @@ class walkthrough {
     return nodes,links
   }
   
-  render () {
+  render() {
     if (this.visible) {
       fill(c.white3);
       stroke(c.gray3);
@@ -476,7 +516,7 @@ class walkthrough {
     }
   }
   
-} //to be made...
+} //Manages rendering walkthroughs, updating model alpha values, and step incrementation. (n.b. need to make the font scale)
 
 class model_key {
   constructor(visible=true,indexes=["Immune System","Attack","Activate","Communicate","Produce","Morph","Inflame","Pathogens & Parasites","Replicate","Accumilate Resources","Evade Destruction"],colors=[c.black3,c.red0,c.green0,c.blue0,c.gold0,c.purple0,c.orange0,c.black3,c.red1,c.brown1,c.gold1],headings=[true,false,false,false,false,false,false,true,false,false,false,false]) {
@@ -597,15 +637,21 @@ class selector {
       k.toggle_visibility();
     }
     
-    if (1 < this.x && this.x < 41 && windowHeight - 128 < this.y && this.y < windowHeight - 112) {
-      w.default_model();
+    if (2 < this.x && this.x < 51 && windowHeight - 73 < this.y && this.y < windowHeight - 64 && display_walkthrough == false) {
+      w = new walkthrough(node_opacity.test,node_translucency.test,node_transparency.test,link_opacity.test,link_translucency.test,link_transparency.test,walkthrough_info.test);
     }
     
-    if (369 < this.x && this.x < 381 && windowHeight - 128 < this.y && this.y < windowHeight - 112) {
+    if (1 < this.x && this.x < 41 && windowHeight - 128 < this.y && this.y < windowHeight - 112 && display_walkthrough == true) {
+      w.default_model();
+      w.visible = false;
+      display_walkthrough = false;
+    }
+    
+    if (369 < this.x && this.x < 381 && windowHeight - 128 < this.y && this.y < windowHeight - 112 && display_walkthrough == true) {
       w.step_backward();
     }
     
-    if (385 < this.x && this.x < 397 && windowHeight - 128 < this.y && this.y < windowHeight - 112) {
+    if (385 < this.x && this.x < 397 && windowHeight - 128 < this.y && this.y < windowHeight - 112 && display_walkthrough == true) {
       w.step_forward();
     }
     
@@ -704,7 +750,7 @@ class selector {
     }
     text(this.t, width - 126, 14, 128, height);
   }
-} //Handels selection of model components, menue rendering, and node movement.
+} //Handels selection of model components, menue rendering, and node movement. (n.b. need to make the font scale and give 'focus' option functionality)
 
 function reset_model() {
   frameRate(0);
@@ -811,6 +857,15 @@ function reset_model() {
   return nodes,links
 } //Defines the default baked parameters of the model.
 
+function resize_sub_route() {
+  if (windowHeight > 540) { //or 540
+    resize_multi = 0;
+  } else {
+    resize_multi = 1;
+  }
+  return resize_multi;
+} //Sub-routine of init and resize function.
+
 function reset_variables() {
   options = false;
   display_walkthrough = false;
@@ -830,22 +885,82 @@ function reset_variables() {
   cx = 0 * sx;
   cy = 0 * sy;
   cm = 0 * sm;
+  max_x = 15;
+  max_y = 10;
+  x_pct = 90; //or 85
+  y_pct = 90;
+  start_large = 0;
+  resize_sub_route();
+  old_width = windowWidth;
+  old_height = windowHeight;
+  sx = x_pct / 100 * windowWidth / max_x;
+  if (resize_multi) {
+    sy = y_pct / 100 * (windowHeight - 150) / max_y;
+    original_scale = 0;
+  } else {
+    sy = y_pct / 100 * windowHeight / max_y;
+    original_scale = 1;
+  }
+  sm = (windowWidth * windowHeight / 45000) ^ 0.5;
+  sm = sm + (16 / sm);
+  
+  
 } //Defines the default state of constants and state variables.
+
+function resize() {
+  if (old_width != windowWidth || old_height != windowHeight) {  
+    resize_sub_route(); 
+    sm = (windowWidth * windowHeight / 45000) ^ 0.5;
+    sm = sm + (16 / sm);
+    sx = x_pct / 100 * windowWidth / max_x;
+    sy = y_pct / 100 * windowHeight / max_y;
+    for (let l = 0; l <= max_node_id; l++) {
+      nodes[l].diameter = nodes_m_scale[l] * sm;
+      nodes[l].radius = round(nodes[l].diameter / 2, 0);
+      old_x_pct = nodes[l].x / old_width;
+      nodes[l].x = windowWidth * old_x_pct;
+      old_y_pct = nodes[l].scale_y / windowHeight;
+      nodes[l].scale_y = windowHeight * old_y_pct;
+      if (resize_multi) {
+        if (original_scale) {
+          nodes[l].y = nodes[l].scale_y * 0.6;
+        } else {
+          nodes[l].y = nodes[l].scale_y;
+        }
+      } else {
+        if (original_scale) {
+          nodes[l].y = nodes[l].scale_y;
+        } else {
+          nodes[l].y = nodes[l].scale_y * 5 /3;
+        }
+      }
+    }
+    old_width = windowWidth;
+    old_height = windowHeight;
+    return sx, sy, sm, old_width, old_height;
+  }
+} //Resizes and scales the model in a way to make it easier to view on different screen sizes. (n.b. scaler not 100% perfect)
 
 function setup() {
   reset_variables();
   c = new colors();
   k = new model_key();
+  m = new menu();
+  w = new walkthrough();
+  w.visible = false;
+  display_walkthrough=false;
   angleMode(DEGREES);
   createCanvas(windowWidth, windowHeight);
   reset_model();
   s = new selector((x = -1), (y = -1));
-  w = new walkthrough(node_opacity["test"],node_translucency["test"],node_transparency["test"],link_opacity["test"],link_translucency["test"],link_transparency["test"],walkthrough_info["test"]); // TEMPORARY! Remove once dedicated system for viewing walkthroughs is in place.
+  //w = new walkthrough(node_opacity.test,node_translucency.test,node_transparency.test,link_opacity.test,link_translucency.test,link_transparency.test,walkthrough_info.test); // TEMPORARY! Remove once dedicated system for viewing walkthroughs is in place.
   frameRate(90);
-} //In-built function: Sets and defines variables for main loop (runs before draw function).
+} //In-built function: Sets and defines variables for main loop (runs before draw function). (n.b. remove test objects before final release)
 
 function draw() {
   resizeCanvas(windowWidth, windowHeight);
+
+  resize();
   
   background(c.background);
 
@@ -864,6 +979,8 @@ function draw() {
   
   if (display_walkthrough) {
     w.render();
+  } else {
+    m.render();
   }
   
   s.render();
