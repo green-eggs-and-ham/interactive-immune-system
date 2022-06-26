@@ -8,6 +8,8 @@ function preload() {
   nodes_m_scale = [5.25,2,1,1.5,2.5,4,1,2.75,2.25,2.25,3,2,1.5,2.25,6,1,2.75,1.5,1.5,1.25,3,2,2,1.5,1.5,1.5,1.75];
   
   info_to_get = {
+    macrophage:
+      "Macrophages are innate immune cells which specialise in the detection and destruction (phagocytosis) of bacteria and other unwanted objects. They are able to hunt by ‘touching’ something they want to inspect. If they don’t recognise it, they ingest whatever it is, trap it in a membrane, and kill it with acid.\n\nThey are also responsible for communicating with Killer T Cells and activating Neutrophils using proteins known as cytokines. The function of these proteins is to regulate the growth and activity of the immune system. By releasing the right quantity of cytokines, the macrophage is able to signify the strength of the immune response based on how many pathogens it can detect.\n\nThey are found all over the body and are slightly different depending on where you look. Their extra functions could range from storing the heavy metals found in tattoo ink inside your skin, to recycling the parts of dying red blood cells in the spleen.",
     test:
       "This is some sample text to make sure everything is working correctly. E.g. The quick brown fox jumps over the lazy dog.",
     test2:
@@ -767,7 +769,7 @@ function reset_model() {
             new node(text_box="Virus",diameter=1*sm+cm,x=3.15*sx+cx,y=4*sy+cy,info="test",fill_color=c.red1,line_color=c.gold1,core_color=c.blank,render_core=false,group_ids=[0,1,3]),
             new node(text_box="Fungi",diameter=1.5*sm+cm,x=2.8*sx+cx,y=3.2*sy+cy,info="test",fill_color=c.brown1,line_color=c.gold1,core_color=c.red1,render_core=true,group_ids=[0,1,2]),
             new node(text_box="Neutrophil",diameter=2.5*sm+cm,x=7.5*sx+cx,y=4*sy+cy,info="test",fill_color=c.blue0,line_color=c.orange0,core_color=c.red0),
-            new node(text_box="Macrophage",diameter=4*sm+cm,x=4*sx+cx,y=5.25*sy+cy,info="test",fill_color=c.red0,line_color=c.green0,core_color=c.blue0),
+            new node(text_box="Macrophage",diameter=4*sm+cm,x=4*sx+cx,y=5.25*sy+cy,info="macrophage",fill_color=c.red0,line_color=c.green0,core_color=c.blue0),
             new node(text_box="Compliment",diameter=1*sm+cm,x=4.01*sx+cx,y=7.5*sy+cy,info="test",fill_color=c.red0,line_color=c.green0,core_color=c.blank,render_core=false),
             new node(text_box="Dendritic Cell",diameter=2.75*sm+cm,x=7.5*sx+cx,y=7*sy+cy,info="test",fill_color=c.blue0,line_color=c.green0,core_color=c.blank,render_core=false),
             new node(text_box="Infected/Cancerous Cell",diameter=2.25*sm+cm,x=10.25*sx+cx,y=9.75*sy+cy,info="test",fill_color=c.gold0,line_color=c.gold1,core_color=c.pink0),
@@ -907,7 +909,7 @@ function reset_variables() {
   
 } //Defines the default state of constants and state variables.
 
-function resize() {
+function resize_model() {
   if (old_width != windowWidth || old_height != windowHeight) {  
     resize_sub_route(); 
     sm = (windowWidth * windowHeight / 45000) ^ 0.5;
@@ -960,7 +962,7 @@ function setup() {
 function draw() {
   resizeCanvas(windowWidth, windowHeight);
 
-  resize();
+  resize_model();
   
   background(c.background);
 
