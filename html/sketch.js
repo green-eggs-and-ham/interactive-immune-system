@@ -33,7 +33,7 @@ function preload() {
     cut_innate:
       ["As soon as your skin is penetrated, your cells begin to send out distress proteins as they are swarmed with microbial intruders, which combined with the cytoplasm of dead cells, alerts nearby sentinel cells of the situation. The first to respond are the Macrophages and the compliment. Attracted by the metaphorical cries for help, the Macrophages arrive and begin to devour as many unidentified lifeforms as they can. At maximum efficiency, Macrophages have been known to devour up to 70 dead cells a day before they become exhausted.","Next arrives the compliment. This collection of proteins is an incredibly powerful defence mechanism and is one of the oldest parts of your immune system. It will bind onto intruders effectively maiming them, then release small proteins that act as a homing signal for the immune system. This allows the sentinel cells to know approximately where the intruders are and how aggressive they should be based on the quantity of these proteins. Finally, they form structures on the outside of larger intruders which will eventually rip holes into them, and delivering a slow, painful death.","They also make the job of the macrophage easier by allowing them to grip on to the compliment proteins instead of the slippery surface of the bacteria. This Velcro like effect improves the efficiency of the Macrophages allowing for a much more effective control over the site of infection. Macrophages also help activate the compliment through expressing activation fragments (specific types of proteins in the compliment) allowing for a quicker execution of compliment related functions.","Despite this, they are often not enough to quell the invasion, so they release messenger proteins to communicate with Neutrophiles as well as send out orders for an inflammatory response. Inflammation is both a dangerous and effective tool that the immune system wields when it wants a quick response. It causes the shape of other cells to changes, allowing for plasma to flood the battlefield, making the optimising the conditions for your cells. The inflammation also causes the area to heat up due to this being undesirable conditions for the intruders who have adapted to colder environments but useful for your cells as this increases their metabolism and speeds up repairs.","By this time if the intruders are still present, the Neutrophiles show up. They then start to mercilessly kill everything in the vicinity of the pathogens. Unlike the other immune cells, their weapons do not replenish and they themselves are on a timer that once expires causes them to perform apoptosis (controlled suicide). But during the small window of time in which they are alive, they can kill 50 bacteria with just one weapon in their arsenal before they die. They also prime macrophages to aggravate atherosclerosis (plaque building up in arteries).","Hopefully, the infection has been eradicated by now, however if it has not then the dendritic cell would step in and contact the adaptive immune system. But this time, the infection was successfully dealt with and now the wound is being sealed off from the outside world with the help of platelets (fragments of megakaryocytes and dead cells) and red blood cells. They form a large sticky net that prevents blood loss and more intruders entering. Underneath the eschar (scab) skin cells are already multiplying to fill the gap, leaving the wound healed."],
     test:
-      ["This is the innate immune system. It is immunity that one is born with. This type of immunity is written in one’s genes, offering lifelong protection. The innate immune response is fast acting and non-specific, meaning it does not respond differently based on the specific virus or bacteria that it detects. The innate immune system encompasses physical barriers and chemical and cellular defenses.","Adaptive immunity is an organism’s acquired immunity to a specific pathogen. As such, it’s also referred to as acquired immunity. Adaptive immunity is not immediate, nor does it always last throughout an organism’s entire lifespan, although it can. The adaptive immune response is marked by clonal expansion of T and B lymphocytes, releasing many antibody copies to neutralize or destroy their target antigen.","Pathogens in the oldest and broadest sense, are any organism or agent that can produce disease. A pathogen may also be referred to as an infectious agent, or simply a germ."],
+      ["This is the innate immune system. It is the organic defence system which has been with you since birth. Unlike the adaptive immune system, it is relatively fast acting, however it is unspecialised. Nevertheless, it has an impressive range of defensive capabilities ranging from massive barriers such as your skin, to physiological barriers such as your stomach acid, and cellular barriers such as your Macrophages and Neutrophiles.","This is the adaptive immune system. It is responsible for protecting our body against everything that our innate immune system can not handle. Although severely weak when we are young, it is able to produce highly specific solutions to every possible pathogen there ever has been and ever could be. Once you have defeated a pathogen, it will remember how to defeat it and be able to do it faster and stronger than before. However, this system takes time to activate for new or unrecognisable enemies and so it relies on the innate immune system to buy it some time whenever it is needed.","These are pathogens. Due to there being so many different ones that we encounter every day, they have been simplified into their microorganism types. A pathogen is an organism which causes disease. In other words, it wants to make itself at home in your body, steal your resources, and replicate as many times as it can. Once it has done this enough it will start to damage you and without your immune system, it would always be fatal."]
   };
   
   node_opacity = {
@@ -394,30 +394,30 @@ class menu {
       fill(c.white3);
       stroke(c.gray3);
       strokeWeight(3);
-      rect(0,windowHeight-128,400,128);
+      rect(0,windowHeight-160,450,160);
       fill(c.silver3);
       stroke(c.gray3);
-      rect(0,windowHeight-128,400,16);
+      rect(0,windowHeight-160,450,16);
       stroke(c.gray3);
       strokeWeight(1.5);
       fill(c.white3);
-      rect(3,windowHeight-72,50,10);
-      rect(3,windowHeight-60,274,10);
+      rect(3,windowHeight-94,140,12);
+      rect(3,windowHeight-82,415,12);
       noStroke();
       textSize(12);
       fill(c.black3);
-      text("-------------------------------------------- Menu: --------------------------------------------",2,windowHeight-116);
-      textSize(10);
-      text("Click on a cell / arrow for info and more options for . Or alternatively, select one of the walkthroughs bellow to learn more on how your immune system protects your body from pathogens:",2,windowHeight-110,398);
-      textSize(9);
+      text("-------------------------------------------------- Menu: ---------------------------------------------------",2,windowHeight-148);
+      textSize(12);
+      text("Click on a cell / arrow for info and more options for usage. Or alternatively, select one of the walkthroughs bellow to learn more on how your immune system protects your body from pathogens:",2,windowHeight-142,450);
+      textSize(11);
       fill(c.blue3);
-      text("Introduction",4,windowHeight-64);
-      text("Innate Immune Response for a Small Wound and Bacterial Infection",4,windowHeight-52)
+      text("Walkthrough 1 - Introduction",4,windowHeight-84);
+      text("Walkthrough 2 - Innate Immune Response for a Small Wound and Bacterial Infection",4,windowHeight-72)
       
     }
   }
   
-} //to be made...
+}
 
 class walkthrough {
   constructor(
@@ -513,28 +513,28 @@ class walkthrough {
       fill(c.white3);
       stroke(c.gray3);
       strokeWeight(3);
-      rect(0,windowHeight-128,400,128);
+      rect(0,windowHeight-160,450,160);
       fill(c.silver3);
       stroke(c.gray3);
-      rect(0,windowHeight-128,400,16);
+      rect(0,windowHeight-160,450,16);
       noStroke();
       textSize(12);
       fill(c.black3);
-      this.title_text = "    Back  --------------------------------- Step " + str(this.step + 1) + ": ---------------------------------";
-      text(this.title_text,2,windowHeight-116);
+      this.title_text = "    Back  ---------------------------------------- Step " + str(this.step + 1) + ": ----------------------------------------";
+      text(this.title_text,2,windowHeight-148);
       fill(c.black3);
       noStroke();
-      triangle(397,windowHeight-120,385,windowHeight-126,385,windowHeight-114);
-      triangle(369,windowHeight-120,381,windowHeight-126,381,windowHeight-114);
-      triangle(2,windowHeight-120,14,windowHeight-126,14,windowHeight-114);
+      triangle(447,windowHeight-152,435,windowHeight-158,435,windowHeight-146);
+      triangle(419,windowHeight-152,431,windowHeight-158,431,windowHeight-146);
+      triangle(2,windowHeight-152,14,windowHeight-158,14,windowHeight-146);
       stroke(c.gray3);
       strokeWeight(3);
-      line(44,windowHeight-128,44,windowHeight-112);
-      line(366,windowHeight-128,366,windowHeight-112);
+      line(44,windowHeight-160,44,windowHeight-144);
+      line(416,windowHeight-160,416,windowHeight-144);
       noStroke();
-      textSize(10);
+      textSize(12.5);
       fill(c.black3);
-      text(this.info_steps[this.step],2,windowHeight-110,398);
+      text(this.info_steps[this.step],2,windowHeight-142,450);
     }
   }
   
@@ -659,25 +659,25 @@ class selector {
       k.toggle_visibility();
     }
     
-    if (2 < this.x && this.x < 51 && windowHeight - 73 < this.y && this.y < windowHeight - 64 && display_walkthrough == false) {
+    if (2 < this.x && this.x < 141 && windowHeight - 95 < this.y && this.y < windowHeight - 81 && display_walkthrough == false) {
       w = new walkthrough(node_opacity.test,node_translucency.test,node_transparency.test,link_opacity.test,link_translucency.test,link_transparency.test,walkthrough_info.test);
     }
 
-    if (2 < this.x && this.x < 275 && windowHeight - 61 < this.y && this.y < windowHeight - 52 && display_walkthrough == false) {
+    if (2 < this.x && this.x < 416 && windowHeight - 83 < this.y && this.y < windowHeight - 71 && display_walkthrough == false) {
       w = new walkthrough(node_opacity.cut_innate,node_translucency.cut_innate,node_transparency.cut_innate,link_opacity.cut_innate,link_translucency.cut_innate,link_transparency.cut_innate,walkthrough_info.cut_innate);
     }
     
-    if (1 < this.x && this.x < 41 && windowHeight - 128 < this.y && this.y < windowHeight - 112 && display_walkthrough == true) {
+    if (1 < this.x && this.x < 41 && windowHeight - 160 < this.y && this.y < windowHeight - 148 && display_walkthrough == true) {
       w.default_model();
       w.visible = false;
       display_walkthrough = false;
     }
     
-    if (369 < this.x && this.x < 381 && windowHeight - 128 < this.y && this.y < windowHeight - 112 && display_walkthrough == true) {
+    if (419 < this.x && this.x < 431 && windowHeight - 160 < this.y && this.y < windowHeight - 148 && display_walkthrough == true) {
       w.step_backward();
     }
     
-    if (385 < this.x && this.x < 397 && windowHeight - 128 < this.y && this.y < windowHeight - 112 && display_walkthrough == true) {
+    if (435 < this.x && this.x < 447 && windowHeight - 160 < this.y && this.y < windowHeight - 148 && display_walkthrough == true) {
       w.step_forward();
     }
     
@@ -768,7 +768,7 @@ class selector {
     noStroke();
     textSize(12);
     text("Close", width - 33, 11);
-    textSize(9);
+    textSize(10.5);
     if (this.type == "node") {
       this.t = nodes[this.selected].info;
     } else {
@@ -788,92 +788,92 @@ function reset_model() {
   nodes = {};
   links = [];
   
-  new_nodes=[new node(text_box="Pathogens",diameter=5.25*sm+cm,x=2.8*sx,y=3.8*sy,info="test",fill_color=c.grey0,line_color=c.grey0,core_color=c.blank,render_core=false,group_ids=[1,2,3]), //this is here due to a rendering bug that occours with the text of the first node created
-            new node(text_box="Bacteria",diameter=2*sm+cm,x=2.55*sx+cx,y=4.1*sy+cy,info="test",fill_color=c.brown1,line_color=c.gold1,core_color=c.red1,render_core=true,group_ids=[0,2,3]),
-            new node(text_box="Virus",diameter=1*sm+cm,x=3.15*sx+cx,y=4*sy+cy,info="test",fill_color=c.red1,line_color=c.gold1,core_color=c.blank,render_core=false,group_ids=[0,1,3]),
-            new node(text_box="Fungi",diameter=1.5*sm+cm,x=2.8*sx+cx,y=3.2*sy+cy,info="test",fill_color=c.brown1,line_color=c.gold1,core_color=c.red1,render_core=true,group_ids=[0,1,2]),
+  new_nodes=[new node(text_box="Pathogens",diameter=5.25*sm+cm,x=2.8*sx,y=3.8*sy,info="error",fill_color=c.grey0,line_color=c.grey0,core_color=c.blank,render_core=false,group_ids=[1,2,3]), //this is here due to a rendering bug that occours with the text of the first node created
+            new node(text_box="Bacteria",diameter=2*sm+cm,x=2.55*sx+cx,y=4.1*sy+cy,info="error",fill_color=c.brown1,line_color=c.gold1,core_color=c.red1,render_core=true,group_ids=[0,2,3]),
+            new node(text_box="Virus",diameter=1*sm+cm,x=3.15*sx+cx,y=4*sy+cy,info="error",fill_color=c.red1,line_color=c.gold1,core_color=c.blank,render_core=false,group_ids=[0,1,3]),
+            new node(text_box="Fungi",diameter=1.5*sm+cm,x=2.8*sx+cx,y=3.2*sy+cy,info="error",fill_color=c.brown1,line_color=c.gold1,core_color=c.red1,render_core=true,group_ids=[0,1,2]),
             new node(text_box="Neutrophil",diameter=2.5*sm+cm,x=7.5*sx+cx,y=4*sy+cy,info="neutrophile",fill_color=c.blue0,line_color=c.orange0,core_color=c.red0),
             new node(text_box="Macrophage",diameter=4*sm+cm,x=4*sx+cx,y=5.25*sy+cy,info="macrophage",fill_color=c.red0,line_color=c.green0,core_color=c.blue0),
-            new node(text_box="Compliment",diameter=1*sm+cm,x=4.01*sx+cx,y=7.5*sy+cy,info="test",fill_color=c.red0,line_color=c.green0,core_color=c.blank,render_core=false),
-            new node(text_box="Dendritic Cell",diameter=2.75*sm+cm,x=7.5*sx+cx,y=7*sy+cy,info="test",fill_color=c.blue0,line_color=c.green0,core_color=c.blank,render_core=false),
-            new node(text_box="Infected/Cancerous Cell",diameter=2.25*sm+cm,x=10.25*sx+cx,y=9.75*sy+cy,info="test",fill_color=c.gold0,line_color=c.gold1,core_color=c.pink0),
-            new node(text_box="Natural Killer Cell",diameter=2.25*sm+cm,x=7.25*sx+cx,y=9.75*sy+cy,info="test",fill_color=c.blue0,line_color=c.red0,core_color=c.blank,render_core=false),
-            new node(text_box="Monocyte",diameter=3*sm+cm,x=0.75*sx+cx,y=5.25*sy+cy,info="test",fill_color=c.purple0,line_color=c.red0,core_color=c.blank,render_core=false),
-            new node(text_box="Eosinophil",diameter=2*sm+cm,x=7.5*sx+cx,y=1*sy+cy,info="test",fill_color=c.red0,line_color=c.green0,core_color=c.orange0),
-            new node(text_box="Basophil",diameter=1.5*sm+cm,x=8.75*sx+cx,y=2.5*sy+cy,info="test",fill_color=c.green0,line_color=c.red0,core_color=c.orange0),
-            new node(text_box="Mast Cell",diameter=2.25*sm+cm,x=9.25*sx+cx,y=3.75*sy+cy,info="test",fill_color=c.blue0,line_color=c.green0,core_color=c.orange0),
-            new node(text_box="Parasites",diameter=6*sm+cm,x=2.75*sx+cx,y=1.25*sy+cy,info="test",fill_color=c.brown1,line_color=c.gold1,core_color=c.red1),
-            new node(text_box="Antibodies",diameter=1*sm+cm,x=11*sx+cx,y=1*sy+cy,info="test",fill_color=c.red0,line_color=c.green0,core_color=c.blank,render_core=false),
-            new node(text_box="Plasma Cell",diameter=2.75*sm+cm,x=14.5*sx+cx,y=3.5*sy+cy,info="test",fill_color=c.green0,line_color=c.purple0,core_color=c.gold0),
-            new node(text_box="B Cell",diameter=1.5*sm+cm,x=13.25*sx+cx,y=3.5*sy+cy,info="test",fill_color=c.purple0,line_color=c.green0,core_color=c.gold0),
-            new node(text_box="Memory B Cell",diameter=1.5*sm+cm,x=11*sx+cx,y=2.25*sy+cy,info="test",fill_color=c.gold0,line_color=c.gold0,core_color=c.blank,render_core=false),
-            new node(text_box="Virgin B Cell",diameter=1.25*sm+cm,x=11*sx+cx,y=3.5*sy+cy,info="test",fill_color=c.purple0,line_color=c.purple0,core_color=c.blank,render_core=false),
-            new node(text_box="Long Lived Plasma Cell",diameter=3*sm+cm,x=14.5*sx+cx,y=1*sy+cy,info="test",fill_color=c.gold0,line_color=c.gold0,core_color=c.blank,render_core=false),
-            new node(text_box="Killer T Cell",diameter=2*sm+cm,x=12*sx+cx,y=8.5*sy+cy,info="test",fill_color=c.red0,line_color=c.purple0,core_color=c.blank,render_core=false),
-            new node(text_box="Memory Killer T Cell",diameter=2*sm+cm,x=14.5*sx+cx,y=9.75*sy+cy,info="test",fill_color=c.red0,line_color=c.red0,core_color=c.blank,render_core=false),
-            new node(text_box="Helper T Cell",diameter=1.5*sm+cm,x=11.5*sx+cx,y=5.25*sy+cy,info="test",fill_color=c.green0,line_color=c.purple0,core_color=c.blue0,render_core=true),
-            new node(text_box="Memory Helper T Cell",diameter=1.5*sm+cm,x=14.5*sx+cx,y=5.75*sy+cy,info="test",fill_color=c.blue0,line_color=c.green0,core_color=c.blank,render_core=false),
-            new node(text_box="Virgin Helper T Cell",diameter=1.5*sm+cm,x=10.75*sx+cx,y=7*sy+cy,info="test",fill_color=c.purple0,line_color=c.purple0,core_color=c.blank,render_core=false),
-            new node(text_box="Virgin Killer T Cell",diameter=1.75*sm+cm,x=9.75*sx+cx,y=8.5*sy+cy,info="test",fill_color=c.purple0,line_color=c.purple0,core_color=c.blank,render_core=false),
+            new node(text_box="Compliment",diameter=1*sm+cm,x=4.01*sx+cx,y=7.5*sy+cy,info="error",fill_color=c.red0,line_color=c.green0,core_color=c.blank,render_core=false),
+            new node(text_box="Dendritic Cell",diameter=2.75*sm+cm,x=7.5*sx+cx,y=7*sy+cy,info="error",fill_color=c.blue0,line_color=c.green0,core_color=c.blank,render_core=false),
+            new node(text_box="Infected/Cancerous Cell",diameter=2.25*sm+cm,x=10.25*sx+cx,y=9.75*sy+cy,info="error",fill_color=c.gold0,line_color=c.gold1,core_color=c.pink0),
+            new node(text_box="Natural Killer Cell",diameter=2.25*sm+cm,x=7.25*sx+cx,y=9.75*sy+cy,info="error",fill_color=c.blue0,line_color=c.red0,core_color=c.blank,render_core=false),
+            new node(text_box="Monocyte",diameter=3*sm+cm,x=0.75*sx+cx,y=5.25*sy+cy,info="error",fill_color=c.purple0,line_color=c.red0,core_color=c.blank,render_core=false),
+            new node(text_box="Eosinophil",diameter=2*sm+cm,x=7.5*sx+cx,y=1*sy+cy,info="error",fill_color=c.red0,line_color=c.green0,core_color=c.orange0),
+            new node(text_box="Basophil",diameter=1.5*sm+cm,x=8.75*sx+cx,y=2.5*sy+cy,info="error",fill_color=c.green0,line_color=c.red0,core_color=c.orange0),
+            new node(text_box="Mast Cell",diameter=2.25*sm+cm,x=9.25*sx+cx,y=3.75*sy+cy,info="error",fill_color=c.blue0,line_color=c.green0,core_color=c.orange0),
+            new node(text_box="Parasites",diameter=6*sm+cm,x=2.75*sx+cx,y=1.25*sy+cy,info="error",fill_color=c.brown1,line_color=c.gold1,core_color=c.red1),
+            new node(text_box="Antibodies",diameter=1*sm+cm,x=11*sx+cx,y=1*sy+cy,info="error",fill_color=c.red0,line_color=c.green0,core_color=c.blank,render_core=false),
+            new node(text_box="Plasma Cell",diameter=2.75*sm+cm,x=14.5*sx+cx,y=3.5*sy+cy,info="error",fill_color=c.green0,line_color=c.purple0,core_color=c.gold0),
+            new node(text_box="B Cell",diameter=1.5*sm+cm,x=13.25*sx+cx,y=3.5*sy+cy,info="error",fill_color=c.purple0,line_color=c.green0,core_color=c.gold0),
+            new node(text_box="Memory B Cell",diameter=1.5*sm+cm,x=11*sx+cx,y=2.25*sy+cy,info="error",fill_color=c.gold0,line_color=c.gold0,core_color=c.blank,render_core=false),
+            new node(text_box="Virgin B Cell",diameter=1.25*sm+cm,x=11*sx+cx,y=3.5*sy+cy,info="error",fill_color=c.purple0,line_color=c.purple0,core_color=c.blank,render_core=false),
+            new node(text_box="Long Lived Plasma Cell",diameter=3*sm+cm,x=14.5*sx+cx,y=1*sy+cy,info="error",fill_color=c.gold0,line_color=c.gold0,core_color=c.blank,render_core=false),
+            new node(text_box="Killer T Cell",diameter=2*sm+cm,x=12*sx+cx,y=8.5*sy+cy,info="error",fill_color=c.red0,line_color=c.purple0,core_color=c.blank,render_core=false),
+            new node(text_box="Memory Killer T Cell",diameter=2*sm+cm,x=14.5*sx+cx,y=9.75*sy+cy,info="error",fill_color=c.red0,line_color=c.red0,core_color=c.blank,render_core=false),
+            new node(text_box="Helper T Cell",diameter=1.5*sm+cm,x=11.5*sx+cx,y=5.25*sy+cy,info="error",fill_color=c.green0,line_color=c.purple0,core_color=c.blue0,render_core=true),
+            new node(text_box="Memory Helper T Cell",diameter=1.5*sm+cm,x=14.5*sx+cx,y=5.75*sy+cy,info="error",fill_color=c.blue0,line_color=c.green0,core_color=c.blank,render_core=false),
+            new node(text_box="Virgin Helper T Cell",diameter=1.5*sm+cm,x=10.75*sx+cx,y=7*sy+cy,info="error",fill_color=c.purple0,line_color=c.purple0,core_color=c.blank,render_core=false),
+            new node(text_box="Virgin Killer T Cell",diameter=1.75*sm+cm,x=9.75*sx+cx,y=8.5*sy+cy,info="error",fill_color=c.purple0,line_color=c.purple0,core_color=c.blank,render_core=false),
             ];
   
-  links=[new link(from_id=4,to_id=0,info="test",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15), //0
-        new link(from_id=5,to_id=0,info="test",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
-        new link(from_id=6,to_id=0,info="test",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
-        new link(from_id=9,to_id=8,info="test",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
-        new link(from_id=13,to_id=14,info="test",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
-        new link(from_id=15,to_id=0,info="test",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
-        new link(from_id=11,to_id=14,info="test",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
-        new link(from_id=12,to_id=14,info="test",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
-        new link(from_id=21,to_id=8,info="test",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
-        new link(from_id=22,to_id=8,info="test",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
-        new link(from_id=10,to_id=5,info="test",line_color=c.purple0), //10
-        new link(from_id=5,to_id=6,info="test",line_color=c.blue0,double_arrows=false,offset=4.9),
-        new link(from_id=6,to_id=13,info="test",line_color=c.green0),
-        new link(from_id=6,to_id=5,info="test",line_color=c.green0,double_arrows=false,offset=6.5),
-        new link(from_id=4,to_id=5,info="test",line_color=c.blue0,double_arrows=false,offset=10),
-        new link(from_id=4,to_id=5,info="test",line_color=c.green0,double_arrows=true,offset=-10),
-        new link(from_id=9,to_id=5,info="test",line_color=c.blue0,double_arrows=true),
-        new link(from_id=11,to_id=4,info="test",line_color=c.green0),
-        new link(from_id=12,to_id=4,info="test",line_color=c.green0),
-        new link(from_id=12,to_id=13,info="test",line_color=c.green0),
-        new link(from_id=15,to_id=13,info="test",line_color=c.green0), //20
-        new link(from_id=15,to_id=12,info="test",line_color=c.green0),
-        new link(from_id=15,to_id=11,info="test",line_color=c.green0),
-        new link(from_id=6,to_id=17,info="test",line_color=c.green0),
-        new link(from_id=24,to_id=17,info="test",line_color=c.blue0,double_arrows=false,offset=0,alpha_pct=15),
-        new link(from_id=23,to_id=17,info="test",line_color=c.blue0),
-        new link(from_id=16,to_id=15,info="test",line_color=c.gold0),
-        new link(from_id=17,to_id=15,info="test",line_color=c.gold0),
-        new link(from_id=18,to_id=15,info="test",line_color=c.gold0),
-        new link(from_id=17,to_id=18,info="test",line_color=c.purple0),
-        new link(from_id=17,to_id=16,info="test",line_color=c.purple0), //30
-        new link(from_id=19,to_id=17,info="test",line_color=c.purple0),
-        new link(from_id=20,to_id=15,info="test",line_color=c.gold0),
-        new link(from_id=16,to_id=20,info="test",line_color=c.purple0),
-        new link(from_id=21,to_id=22,info="test",line_color=c.purple0),
-        new link(from_id=24,to_id=16,info="test",line_color=c.blue0,double_arrows=true,offset=0,alpha_pct=15),
-        new link(from_id=24,to_id=21,info="test",line_color=c.green0,double_arrows=false,offset=0,alpha_pct=15),
-        new link(from_id=24,to_id=22,info="test",line_color=c.green0,double_arrows=false,offset=0,alpha_pct=15),
-        new link(from_id=24,to_id=9,info="test",line_color=c.blue0,double_arrows=false,offset=0,alpha_pct=15),
-        new link(from_id=24,to_id=7,info="test",line_color=c.blue0,double_arrows=false,offset=0,alpha_pct=15),
-        new link(from_id=24,to_id=5,info="test",line_color=c.blue0,double_arrows=false,offset=0,alpha_pct=15), //40
-        new link(from_id=24,to_id=4,info="test",line_color=c.blue0,double_arrows=false,offset=0,alpha_pct=15),
-        new link(from_id=23,to_id=9,info="test",line_color=c.blue0),
-        new link(from_id=23,to_id=7,info="test",line_color=c.blue0,double_arrows=false,offset=8),
-        new link(from_id=4,to_id=7,info="test",line_color=c.blue0),
-        new link(from_id=23,to_id=5,info="test",line_color=c.blue0),
-        new link(from_id=23,to_id=4,info="test",line_color=c.blue0),
-        new link(from_id=23,to_id=16,info="test",line_color=c.blue0,double_arrows=true),
-        new link(from_id=23,to_id=21,info="test",line_color=c.green0),
-        new link(from_id=23,to_id=22,info="test",line_color=c.green0),
-        new link(from_id=23,to_id=24,info="test",line_color=c.purple0), //50
-        new link(from_id=25,to_id=23,info="test",line_color=c.purple0),
-        new link(from_id=26,to_id=21,info="test",line_color=c.purple0),
-        new link(from_id=7,to_id=25,info="test",line_color=c.blue0,double_arrows=false,offset=8),
-        new link(from_id=7,to_id=25,info="test",line_color=c.green0,double_arrows=false,offset=-8),
-        new link(from_id=7,to_id=23,info="test",line_color=c.green0,double_arrows=false,offset=8),
-        new link(from_id=7,to_id=26,info="test",line_color=c.green0),
+  links=[new link(from_id=4,to_id=0,info="error",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15), //0
+        new link(from_id=5,to_id=0,info="error",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
+        new link(from_id=6,to_id=0,info="error",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
+        new link(from_id=9,to_id=8,info="error",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
+        new link(from_id=13,to_id=14,info="error",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
+        new link(from_id=15,to_id=0,info="error",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
+        new link(from_id=11,to_id=14,info="error",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
+        new link(from_id=12,to_id=14,info="error",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
+        new link(from_id=21,to_id=8,info="error",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
+        new link(from_id=22,to_id=8,info="error",line_color=c.red0,double_arrows=false,offset=0,alpha_pct=15),
+        new link(from_id=10,to_id=5,info="error",line_color=c.purple0), //10
+        new link(from_id=5,to_id=6,info="error",line_color=c.blue0,double_arrows=false,offset=4.9),
+        new link(from_id=6,to_id=13,info="error",line_color=c.green0),
+        new link(from_id=6,to_id=5,info="error",line_color=c.green0,double_arrows=false,offset=6.5),
+        new link(from_id=4,to_id=5,info="error",line_color=c.blue0,double_arrows=false,offset=10),
+        new link(from_id=4,to_id=5,info="error",line_color=c.green0,double_arrows=true,offset=-10),
+        new link(from_id=9,to_id=5,info="error",line_color=c.blue0,double_arrows=true),
+        new link(from_id=11,to_id=4,info="error",line_color=c.green0),
+        new link(from_id=12,to_id=4,info="error",line_color=c.green0),
+        new link(from_id=12,to_id=13,info="error",line_color=c.green0),
+        new link(from_id=15,to_id=13,info="error",line_color=c.green0), //20
+        new link(from_id=15,to_id=12,info="error",line_color=c.green0),
+        new link(from_id=15,to_id=11,info="error",line_color=c.green0),
+        new link(from_id=6,to_id=17,info="error",line_color=c.green0),
+        new link(from_id=24,to_id=17,info="error",line_color=c.blue0,double_arrows=false,offset=0,alpha_pct=15),
+        new link(from_id=23,to_id=17,info="error",line_color=c.blue0),
+        new link(from_id=16,to_id=15,info="error",line_color=c.gold0),
+        new link(from_id=17,to_id=15,info="error",line_color=c.gold0),
+        new link(from_id=18,to_id=15,info="error",line_color=c.gold0),
+        new link(from_id=17,to_id=18,info="error",line_color=c.purple0),
+        new link(from_id=17,to_id=16,info="error",line_color=c.purple0), //30
+        new link(from_id=19,to_id=17,info="error",line_color=c.purple0),
+        new link(from_id=20,to_id=15,info="error",line_color=c.gold0),
+        new link(from_id=16,to_id=20,info="error",line_color=c.purple0),
+        new link(from_id=21,to_id=22,info="error",line_color=c.purple0),
+        new link(from_id=24,to_id=16,info="error",line_color=c.blue0,double_arrows=true,offset=0,alpha_pct=15),
+        new link(from_id=24,to_id=21,info="error",line_color=c.green0,double_arrows=false,offset=0,alpha_pct=15),
+        new link(from_id=24,to_id=22,info="error",line_color=c.green0,double_arrows=false,offset=0,alpha_pct=15),
+        new link(from_id=24,to_id=9,info="error",line_color=c.blue0,double_arrows=false,offset=0,alpha_pct=15),
+        new link(from_id=24,to_id=7,info="error",line_color=c.blue0,double_arrows=false,offset=0,alpha_pct=15),
+        new link(from_id=24,to_id=5,info="error",line_color=c.blue0,double_arrows=false,offset=0,alpha_pct=15), //40
+        new link(from_id=24,to_id=4,info="error",line_color=c.blue0,double_arrows=false,offset=0,alpha_pct=15),
+        new link(from_id=23,to_id=9,info="error",line_color=c.blue0),
+        new link(from_id=23,to_id=7,info="error",line_color=c.blue0,double_arrows=false,offset=8),
+        new link(from_id=4,to_id=7,info="error",line_color=c.blue0),
+        new link(from_id=23,to_id=5,info="error",line_color=c.blue0),
+        new link(from_id=23,to_id=4,info="error",line_color=c.blue0),
+        new link(from_id=23,to_id=16,info="error",line_color=c.blue0,double_arrows=true),
+        new link(from_id=23,to_id=21,info="error",line_color=c.green0),
+        new link(from_id=23,to_id=22,info="error",line_color=c.green0),
+        new link(from_id=23,to_id=24,info="error",line_color=c.purple0), //50
+        new link(from_id=25,to_id=23,info="error",line_color=c.purple0),
+        new link(from_id=26,to_id=21,info="error",line_color=c.purple0),
+        new link(from_id=7,to_id=25,info="error",line_color=c.blue0,double_arrows=false,offset=8),
+        new link(from_id=7,to_id=25,info="error",line_color=c.green0,double_arrows=false,offset=-8),
+        new link(from_id=7,to_id=23,info="error",line_color=c.green0,double_arrows=false,offset=8),
+        new link(from_id=7,to_id=26,info="error",line_color=c.green0),
         ];
   
   for (let n = 0; n < new_nodes.length; n++) {
