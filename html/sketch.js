@@ -1,4 +1,4 @@
-// By Oscar Bullen (March 2022)
+// By Oscar Bullen (June 2022)
 // Made using p5.js (https://p5js.org)
 
 function preload() {
@@ -8,12 +8,16 @@ function preload() {
   nodes_m_scale = [5.25,2,1,1.5,2.5,4,1,2.75,2.25,2.25,3,2,1.5,2.25,6,1,2.75,1.5,1.5,1.25,3,2,2,1.5,1.5,1.5,1.75];
   
   info_to_get = {
+    neutrophile:
+    "Neutrophiles are the most common phagocyte of the innate immune system in the human body. They specialise in destroying cells and causing inflammation.\n\n\They can kill microbes in a multitude of ways. The first is phagocytosis, which they don’t recognise it, they ingest whatever it is, trap it in a membrane, and kill it with acid. They are also capable of releasing water soluble antimicrobial granular proteins as well as their own DNA to form extracellular traps to slow down the movement of intruders.\n\nThey are drawn to sites of inflammation and will even undergo apoptosis (programmed cell death) if they are not constantly stimulated. This is to prevent too much collateral damage and reduce the waste of the body’s resources.",
     macrophage:
       "Macrophages are innate immune cells which specialise in the detection and destruction (phagocytosis) of bacteria and other unwanted objects. They are able to hunt by ‘touching’ something they want to inspect. If they don’t recognise it, they ingest whatever it is, trap it in a membrane, and kill it with acid.\n\nThey are also responsible for communicating with Killer T Cells and activating Neutrophils using proteins known as cytokines. The function of these proteins is to regulate the growth and activity of the immune system. By releasing the right quantity of cytokines, the macrophage is able to signify the strength of the immune response based on how many pathogens it can detect.\n\nThey are found all over the body and are slightly different depending on where you look. Their extra functions could range from storing the heavy metals found in tattoo ink inside your skin, to recycling the parts of dying red blood cells in the spleen.",
     test:
       "This is some sample text to make sure everything is working correctly. E.g. The quick brown fox jumps over the lazy dog.",
     test2:
       "This is yet some more sample text in order to make sure that information can be changed on the fly if it is needed. e.g. The answer to life, the universe, and everything is inexorably 42.",
+    error:
+      "[Data Error]",
     none: "",
   };
   
@@ -26,36 +30,50 @@ function preload() {
   link_default_transparency = [];
   
   walkthrough_info = {
+    cut_innate:
+      ["As soon as your skin is penetrated, your cells begin to send out distress proteins as they are swarmed with microbial intruders, which combined with the cytoplasm of dead cells, alerts nearby sentinel cells of the situation. The first to respond are the Macrophages and the compliment. Attracted by the metaphorical cries for help, the Macrophages arrive and begin to devour as many unidentified lifeforms as they can. At maximum efficiency, Macrophages have been known to devour up to 70 dead cells a day before they become exhausted.","Next arrives the compliment. This collection of proteins is an incredibly powerful defence mechanism and is one of the oldest parts of your immune system. It will bind onto intruders effectively maiming them, then release small proteins that act as a homing signal for the immune system. This allows the sentinel cells to know approximately where the intruders are and how aggressive they should be based on the quantity of these proteins. Finally, they form structures on the outside of larger intruders which will eventually rip holes into them, and delivering a slow, painful death.","They also make the job of the macrophage easier by allowing them to grip on to the compliment proteins instead of the slippery surface of the bacteria. This Velcro like effect improves the efficiency of the Macrophages allowing for a much more effective control over the site of infection. Macrophages also help activate the compliment through expressing activation fragments (specific types of proteins in the compliment) allowing for a quicker execution of compliment related functions.","Despite this, they are often not enough to quell the invasion, so they release messenger proteins to communicate with Neutrophiles as well as send out orders for an inflammatory response. Inflammation is both a dangerous and effective tool that the immune system wields when it wants a quick response. It causes the shape of other cells to changes, allowing for plasma to flood the battlefield, making the optimising the conditions for your cells. The inflammation also causes the area to heat up due to this being undesirable conditions for the intruders who have adapted to colder environments but useful for your cells as this increases their metabolism and speeds up repairs.","By this time if the intruders are still present, the Neutrophiles show up. They then start to mercilessly kill everything in the vicinity of the pathogens. Unlike the other immune cells, their weapons do not replenish and they themselves are on a timer that once expires causes them to perform apoptosis (controlled suicide). But during the small window of time in which they are alive, they can kill 50 bacteria with just one weapon in their arsenal before they die. They also prime macrophages to aggravate atherosclerosis (plaque building up in arteries).","Hopefully, the infection has been eradicated by now, however if it has not then the dendritic cell would step in and contact the adaptive immune system. But this time, the infection was successfully dealt with and now the wound is being sealed off from the outside world with the help of platelets (fragments of megakaryocytes and dead cells) and red blood cells. They form a large sticky net that prevents blood loss and more intruders entering. Underneath the eschar (scab) skin cells are already multiplying to fill the gap, leaving the wound healed."],
     test:
       ["This is the innate immune system. It is immunity that one is born with. This type of immunity is written in one’s genes, offering lifelong protection. The innate immune response is fast acting and non-specific, meaning it does not respond differently based on the specific virus or bacteria that it detects. The innate immune system encompasses physical barriers and chemical and cellular defenses.","Adaptive immunity is an organism’s acquired immunity to a specific pathogen. As such, it’s also referred to as acquired immunity. Adaptive immunity is not immediate, nor does it always last throughout an organism’s entire lifespan, although it can. The adaptive immune response is marked by clonal expansion of T and B lymphocytes, releasing many antibody copies to neutralize or destroy their target antigen.","Pathogens in the oldest and broadest sense, are any organism or agent that can produce disease. A pathogen may also be referred to as an infectious agent, or simply a germ."],
   };
   
   node_opacity = {
+    cut_innate:
+      [[0,1,5],[0,1,6],[0,1,5,6],[],[0,1,4,5],[]],
     test:
       [[4,5,6,7,9,10,11,12,13],[15,16,17,18,19,20,21,22,23,24,25,26],[0,1,2,3,8,14]],
   };
   
   node_translucency = {
+    cut_innate:
+      [[2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26],[2,3,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26],[2,3,4,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26],[],[2,3,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26],[]],
     test:
       [[0,1,2,3,8,14,15,16,17,18,19,20,21,22,23,24,25,26],[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],[4,5,6,7,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26]],
   };
   
   node_transparency = {
+    cut_innate:
+      [[],[],[],[],[],[]],
     test:
       [[],[],[]],
   };
   
   link_opacity = {
+    cut_innate:
+      [[1],[1,2,13],[1,11,13],[1,2,15],[0,14,15],[]],
     test:
       [[10,11,12,13,14,15,16,17,18,19,44],[24,25,26,27,28,29,30,31,32,33,34,35,36,37,47,48,49,50,51,52],[]],
   };
   
   link_translucency = {
+    cut_innate:
+      [[0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56],[0,4,5,6,7,8,9,10,11,12,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56],[0,2,3,4,5,6,7,8,9,10,12,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56],[0,3,4,5,6,7,8,9,10,12,13,14,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56],[1,2,3,4,5,6,7,8,9,10,11,12,13,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56],[]],
     test:
       [[0,1,2,3,4,5,6,7,8,9,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,45,46,47,48,49,50,51,52,53,54,55,56],[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,38,39,40,41,42,43,44,45,46,53,54,55,56],[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56]],
   };
   
   link_transparency = {
+    cut_innate:
+      [[],[],[],[],[],[]],
     test:
       [[],[],[]],
   };
@@ -383,7 +401,8 @@ class menu {
       stroke(c.gray3);
       strokeWeight(1.5);
       fill(c.white3);
-      rect(3,windowHeight-72,50,10)
+      rect(3,windowHeight-72,50,10);
+      rect(3,windowHeight-60,274,10);
       noStroke();
       textSize(12);
       fill(c.black3);
@@ -393,6 +412,7 @@ class menu {
       textSize(9);
       fill(c.blue3);
       text("Introduction",4,windowHeight-64);
+      text("Innate Immune Response for a Small Wound and Bacterial Infection",4,windowHeight-52)
       
     }
   }
@@ -642,6 +662,10 @@ class selector {
     if (2 < this.x && this.x < 51 && windowHeight - 73 < this.y && this.y < windowHeight - 64 && display_walkthrough == false) {
       w = new walkthrough(node_opacity.test,node_translucency.test,node_transparency.test,link_opacity.test,link_translucency.test,link_transparency.test,walkthrough_info.test);
     }
+
+    if (2 < this.x && this.x < 275 && windowHeight - 61 < this.y && this.y < windowHeight - 52 && display_walkthrough == false) {
+      w = new walkthrough(node_opacity.cut_innate,node_translucency.cut_innate,node_transparency.cut_innate,link_opacity.cut_innate,link_translucency.cut_innate,link_transparency.cut_innate,walkthrough_info.cut_innate);
+    }
     
     if (1 < this.x && this.x < 41 && windowHeight - 128 < this.y && this.y < windowHeight - 112 && display_walkthrough == true) {
       w.default_model();
@@ -768,7 +792,7 @@ function reset_model() {
             new node(text_box="Bacteria",diameter=2*sm+cm,x=2.55*sx+cx,y=4.1*sy+cy,info="test",fill_color=c.brown1,line_color=c.gold1,core_color=c.red1,render_core=true,group_ids=[0,2,3]),
             new node(text_box="Virus",diameter=1*sm+cm,x=3.15*sx+cx,y=4*sy+cy,info="test",fill_color=c.red1,line_color=c.gold1,core_color=c.blank,render_core=false,group_ids=[0,1,3]),
             new node(text_box="Fungi",diameter=1.5*sm+cm,x=2.8*sx+cx,y=3.2*sy+cy,info="test",fill_color=c.brown1,line_color=c.gold1,core_color=c.red1,render_core=true,group_ids=[0,1,2]),
-            new node(text_box="Neutrophil",diameter=2.5*sm+cm,x=7.5*sx+cx,y=4*sy+cy,info="test",fill_color=c.blue0,line_color=c.orange0,core_color=c.red0),
+            new node(text_box="Neutrophil",diameter=2.5*sm+cm,x=7.5*sx+cx,y=4*sy+cy,info="neutrophile",fill_color=c.blue0,line_color=c.orange0,core_color=c.red0),
             new node(text_box="Macrophage",diameter=4*sm+cm,x=4*sx+cx,y=5.25*sy+cy,info="macrophage",fill_color=c.red0,line_color=c.green0,core_color=c.blue0),
             new node(text_box="Compliment",diameter=1*sm+cm,x=4.01*sx+cx,y=7.5*sy+cy,info="test",fill_color=c.red0,line_color=c.green0,core_color=c.blank,render_core=false),
             new node(text_box="Dendritic Cell",diameter=2.75*sm+cm,x=7.5*sx+cx,y=7*sy+cy,info="test",fill_color=c.blue0,line_color=c.green0,core_color=c.blank,render_core=false),
