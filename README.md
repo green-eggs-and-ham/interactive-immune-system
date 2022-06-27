@@ -34,9 +34,10 @@ Use the navigator arrows in the bottom-left menu box to step through the stages 
 The key in the top-left corner can be used to identify the core functions of each component of the immune system as 
 well as the types of interactions between the different nodes.
 
-## Screenshot ##
+## Screenshots ##
 
 ![Screen-shot](images/screenshot.png)
+![Screen-shot](images/screenshot2.png)
 
 ## Contributing ##
 
