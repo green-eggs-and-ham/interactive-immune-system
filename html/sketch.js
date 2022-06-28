@@ -173,7 +173,7 @@ class node {
       stroke(c.white3);
     }
     strokeWeight(round(0.9 * this.diameter ** 0.25, 0));
-    this.string = join([this.text_box, str(this.id)], "#");
+    this.string = this.text_box; //join([this.text_box, str(this.id)], "#");
     this.width = textWidth(this.string);
     textSize(12);
     text(
